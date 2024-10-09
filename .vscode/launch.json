@@ -19,6 +19,16 @@
       "projectName": "bookservice",
       "args": "",
       "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-EmployeeserviceApplication<employeeservice>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.quangduy.employeeservice.EmployeeserviceApplication",
+      "projectName": "employeeservice",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
     }
   ]
 }
