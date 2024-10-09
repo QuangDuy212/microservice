@@ -8,7 +8,11 @@ import org.axonframework.spring.stereotype.Aggregate;
 import org.springframework.beans.BeanUtils;
 
 import com.quangduy.bookservice.command.command.CreateBookCommand;
+import com.quangduy.bookservice.command.command.DeleteBookCommand;
+import com.quangduy.bookservice.command.command.UpdateBookCommand;
 import com.quangduy.bookservice.command.event.BookCreatedEvent;
+import com.quangduy.bookservice.command.event.BookDeletedEvent;
+import com.quangduy.bookservice.command.event.BookUpdatedEvent;
 
 @Aggregate
 public class BookAggregate {
@@ -29,11 +33,38 @@ public class BookAggregate {
         AggregateLifecycle.apply(bookCreatedEvent);
     }
 
+    @CommandHandler
+    public void handle(UpdateBookCommand updateBookCommand) {
+        BookUpdatedEvent bookUpdatedEvent = new BookUpdatedEvent();
+        BeanUtils.copyProperties(updateBookCommand, bookUpdatedEvent);
+        AggregateLifecycle.apply(bookUpdatedEvent);
+    }
+
+    @CommandHandler
+    public void handle(DeleteBookCommand deleteBookCommand) {
+        BookDeletedEvent bookDeletedEvent = new BookDeletedEvent();
+        BeanUtils.copyProperties(deleteBookCommand, bookDeletedEvent);
+        AggregateLifecycle.apply(bookDeletedEvent);
+    }
+
     @EventSourcingHandler
     public void on(BookCreatedEvent event) {
         this.bookId = event.getBookId();
         this.author = event.getAuthor();
         this.isReady = event.getIsReady();
         this.name = event.getName();
+    }
+
+    @EventSourcingHandler
+    public void on(BookUpdatedEvent event) {
+        this.bookId = event.getBookId();
+        this.author = event.getAuthor();
+        this.isReady = event.getIsReady();
+        this.name = event.getName();
+    }
+
+    @EventSourcingHandler
+    public void on(BookDeletedEvent event) {
+        this.bookId = event.getBookId();
     }
 }
