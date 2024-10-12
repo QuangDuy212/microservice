@@ -41,7 +41,8 @@
       "mainClass": "com.quangduy.apigateway.ApigatewayApplication",
       "projectName": "apigateway",
       "args": "",
-      "envFile": "${workspaceFolder}/.env"
+      "envFile": "${workspaceFolder}/.env",
+      "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=51045 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=apigateway"
     },
     {
       "type": "java",
@@ -50,6 +51,16 @@
       "cwd": "${workspaceFolder}",
       "mainClass": "com.quangduy.notificationservice.NotificationserviceApplication",
       "projectName": "notificationservice",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-BorrowingserviceApplication<borrowingservice>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.quangduy.borrowingservice.BorrowingserviceApplication",
+      "projectName": "borrowingservice",
       "args": "",
       "envFile": "${workspaceFolder}/.env"
     }
