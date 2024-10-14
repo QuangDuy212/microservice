@@ -21,4 +21,12 @@ public class BorrowingEventsHandler {
         BeanUtils.copyProperties(event, model);
         this.borrowingRepository.save(model);
     }
+
+    @EventHandler
+    public void on(BorrowDeletedEvent event) {
+        if (this.borrowingRepository.findById(event.getId()).isPresent()) {
+            this.borrowingRepository.deleteById(event.getId());
+        } else
+            return;
+    }
 }

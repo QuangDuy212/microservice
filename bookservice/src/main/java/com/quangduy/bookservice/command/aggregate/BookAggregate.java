@@ -13,6 +13,8 @@ import com.quangduy.bookservice.command.command.UpdateBookCommand;
 import com.quangduy.bookservice.command.event.BookCreatedEvent;
 import com.quangduy.bookservice.command.event.BookDeletedEvent;
 import com.quangduy.bookservice.command.event.BookUpdatedEvent;
+import com.quangduy.commonservice.command.UpdateStatusBookCommand;
+import com.quangduy.commonservice.event.BookUpdateStatusEvent;
 
 @Aggregate
 public class BookAggregate {
@@ -47,6 +49,13 @@ public class BookAggregate {
         AggregateLifecycle.apply(bookDeletedEvent);
     }
 
+    @CommandHandler
+    public void handle(UpdateStatusBookCommand command) {
+        BookUpdateStatusEvent event = new BookUpdateStatusEvent();
+        BeanUtils.copyProperties(command, event);
+        AggregateLifecycle.apply(event);
+    }
+
     @EventSourcingHandler
     public void on(BookCreatedEvent event) {
         this.bookId = event.getBookId();
@@ -66,5 +75,11 @@ public class BookAggregate {
     @EventSourcingHandler
     public void on(BookDeletedEvent event) {
         this.bookId = event.getBookId();
+    }
+
+    @EventSourcingHandler
+    public void on(BookUpdateStatusEvent event) {
+        this.bookId = event.getBookId();
+        this.isReady = event.getIsReady();
     }
 }
